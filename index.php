@@ -1,5 +1,8 @@
 <?php include "db.php"?>
 <?php ob_start();?>
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,22 +51,21 @@
                     <div class="form-group">
                       <input required name="u_pass"  type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <div class="custom-control custom-checkbox small">
                         <input type="checkbox" class="custom-control-input" id="customCheck">
                         <label class="custom-control-label" for="customCheck">Remember Me</label>
                       </div>
-                    </div>
+                    </div> -->
                     <button type="submit" name="login_btn" class="btn btn-primary btn-user btn-block">
                       Login
                     </button>
-                    <hr>
-                    <a href="index.html" class="btn btn-google btn-user btn-block">
+                    <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
                       <i class="fab fa-google fa-fw"></i> Login with Google
                     </a>
                     <a href="index.html" class="btn btn-facebook btn-user btn-block">
                       <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                    </a>
+                    </a> -->
                   </form>
                   <hr>
                   <div class="text-center">
@@ -85,7 +87,36 @@
 
                 if($result)
                 {
-                    header("Location:dashboard.php");
+                  $num_rows = mysqli_num_rows($result);
+                  if($num_rows == 1)
+                  {
+                    while($row = mysqli_fetch_array($result))
+                    {
+                        $id = $row['id'];                    
+                        $user_email = $row['user_email'];                    
+                        $user_name = $row['user_name'];  
+                        
+                        $_SESSION["id"] = $id;             // global variable ,browser cookies 
+                        $_SESSION["user_email"] = $user_email;
+                        $_SESSION["user_name"] = $user_name;
+                    
+                    
+                    }
+
+
+
+
+                  header("Location:dashboard.php");
+
+                  }
+                  else
+                  {
+
+                    echo "<script>
+                    alert('User name and password invalid');
+                    </script>";
+                  }
+
                 }
                 else
                 {

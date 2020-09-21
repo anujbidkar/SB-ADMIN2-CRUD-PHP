@@ -1,6 +1,8 @@
 <?php include "db.php"?>
 <?php ob_start();?>
-
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,13 +60,12 @@
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
     <i class="fas fa-fw fa-cog"></i>
-    <span>Components</span>
+    <span>Blog</span>
   </a>
   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
-      <h6 class="collapse-header">Custom Components:</h6>
-      <a class="collapse-item" href="buttons.html">Buttons</a>
-      <a class="collapse-item" href="cards.html">Cards</a>
+      <a class="collapse-item" href="buttons.html">Create Blog</a>
+      <a class="collapse-item" href="cards.html">View Blog</a>
     </div>
   </div>
 </li>
@@ -126,6 +127,27 @@
   <a class="nav-link" href="tables.html">
     <i class="fas fa-fw fa-table"></i>
     <span>Tables</span></a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="tables.html">
+    <i class="fas fa-fw fa-table"></i>
+    <form action="" method="POST">
+    <button type="submit" name="logout_btn" class="btn ">Logout</button></a>
+    </form>
+
+    <?php
+
+    if(isset($_POST['logout_btn']))
+    {
+      $_SESSION["id"] = "";             
+      $_SESSION["user_email"] = "";
+      $_SESSION["user_name"] = "";
+
+      header("Location:index.php");
+    }
+
+
+    ?>
 </li>
 
 <!-- Divider -->
@@ -303,7 +325,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION["user_name"]?></span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->
